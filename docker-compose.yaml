@@ -1,0 +1,35 @@
+version: "3.7"
+services:
+  db:
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_DB: testdb
+      POSTGRES_PASSWORD: P@$$w0rd
+      POSTGRES_USER: myuser
+    networks:
+      - db-network
+
+  app:
+    build: flask_app
+    restart: always
+    ports:
+      - 5000:5000
+    networks:
+      - db-network
+      - web-network
+
+  web:
+    build: web
+    restart: always
+    depends_on: app
+    ports:
+      - 8888:80
+    links:
+      - "app"
+    networks:
+      - web-network
+
+networks:
+  db-network:
+  web-network:
