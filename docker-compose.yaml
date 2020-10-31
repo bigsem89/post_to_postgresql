@@ -5,8 +5,8 @@ services:
     restart: always
     environment:
       POSTGRES_DB: testdb
-      POSTGRES_PASSWORD: P@$$w0rd
-      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: 123
+      POSTGRES_USER: dbuser
     networks:
       - db-network
 
@@ -18,6 +18,8 @@ services:
     restart: always
     ports:
       - 5000:5000
+    links:
+      - "db"
     networks:
       - db-network
       - web-network
