@@ -9,8 +9,7 @@ db = SQLAlchemy(app)
 
 class Person(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    fname = db.Column(db.String(30), nullable=False)
-    lname = db.Column(db.String(30), nullable=False)
+    name = db.Column(db.String(100), nullable=False, unique=True)
 
     def __repr__(self):
         return 'Person %r' % self.id
@@ -22,17 +21,16 @@ db.create_all()
 @app.route("/", methods=['POST', 'GET'])
 def index():
     if request.method == "POST":
-        fname = request.form['fname']
-        lname = request.form['lname']
+        name = request.form['fname'] + " " + request.form['lname']
 
-        person = Person(fname=fname, lname=lname)
+        person = Person(name=name)
 
         try:
             db.session.add(person)
             db.session.commit()
             return redirect("/")
         except:
-            return "Error"
+            return redirect("/")
     else:
         return render_template("form.html")
 
