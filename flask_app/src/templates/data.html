@@ -1,0 +1,13 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Data from Postgresql</title>
+</head>
+<body>
+<h1>User data</h1>
+ {% for el in persons %}
+   <p>{{ el.id }}. {{ el.fname }} {{ el.lname }}</p>
+ {% endfor %}
+<button type="button"><a href="/">Back</a></button>
+</body>
+</html>

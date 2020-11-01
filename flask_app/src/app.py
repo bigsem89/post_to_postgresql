@@ -9,8 +9,8 @@ db = SQLAlchemy(app)
 
 class Person(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    fname = db.Column(db.String(10), nullable=False)
-    lname = db.Column(db.String(10), nullable=False)
+    fname = db.Column(db.String(30), nullable=False)
+    lname = db.Column(db.String(30), nullable=False)
 
     def __repr__(self):
         return 'Person %r' % self.id
@@ -27,11 +27,20 @@ def index():
 
         person = Person(fname=fname, lname=lname)
 
-        db.session.add(person)
-        db.session.commit()
-        return redirect("/")
+        try:
+            db.session.add(person)
+            db.session.commit()
+            return redirect("/")
+        except:
+            return "Error"
     else:
         return render_template("form.html")
+
+
+@app.route("/data")
+def data():
+    persons = Person.query.order_by(Person.id).all()
+    return render_template("data.html", persons=persons)
 
 
 if __name__ == "__main__":
