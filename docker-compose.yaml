@@ -2,6 +2,8 @@ version: "3.7"
 services:
   db:
     image: postgres:13
+    volumes:
+    - ./pgdata:/var/lib/postgresql/data
     restart: always
     environment:
       POSTGRES_DB: testdb
